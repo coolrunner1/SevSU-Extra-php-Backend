@@ -1,0 +1,694 @@
+openapi: 3.0.0
+info:
+  title: Онлайн Кинотеатр API
+  description: API для управления фильмами, жанрами, плейлистами и пользователями в онлайн кинотеатре.
+  version: 1.0.0
+paths:
+  /genres:
+    get:
+      summary: Получить список всех жанров
+      responses:
+        '200':
+          description: Успешный ответ с массивом жанров
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Genre'
+    post:
+      summary: Добавить новый жанр
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Genre'
+      responses:
+        '201':
+          description: Жанр успешно добавлен
+
+  /genres/{id}:
+    get:
+      summary: Получить информацию о жанре по id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Успешный ответ с информацией о жанре
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Genre'
+        '404':
+          description: Жанр не найден
+
+    put:
+      summary: Обновить жанр по id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Genre'
+      responses:
+        '200':
+          description: Информация о жанре успешно обновлена
+        '201':
+          description: Жанр успешно создан
+    
+    patch:
+      summary: Обновить данные о жанре по id
+      parameters:
+          - name: id
+            in: path
+            required: true
+            schema:
+              type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/Genre'
+                - type: object
+                  properties:
+                    Segment:
+                      nullable: true
+      responses:
+        '200':
+          description: Жанр успешно обновлён
+        '404':
+          description: Жанр не найден
+
+    delete:
+      summary: Удалить жанр по id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Жанр успешно удален
+        '404':
+          description: Жанр не найден
+
+  /videos:
+    get:
+      summary: Получить список всех видео
+      responses:
+        '200':
+          description: Успешный ответ с массивом видео
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Video'
+    post:
+      summary: Добавить новое видео
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Video'
+      responses:
+        '201':
+          description: Видео успешно добавлено
+
+  /videos/{id}:
+    get:
+      summary: Получить информацию о видео по id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Успешный ответ с информацией о видео
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Video'
+        '404':
+          description: Видео не найдено
+
+    put:
+      summary: Обновить информацию о видео по id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Video'
+      responses:
+        '200':
+          description: Информация о видео успешно обновлена
+        '201':
+          description: Видео успешно создано
+    
+    patch:
+      summary: Обновить информацию о видео по id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Video'
+      responses:
+        '200':
+          description: Информация о видео успешно обновлена
+        '404':
+          description: Видео не найдено
+
+    delete:
+      summary: Удалить видео по id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Видео успешно удалено
+        '404':
+          description: Видео не найдено
+
+  /personalities:
+    get:
+      summary: Получить список всех персоналий
+      responses:
+        '200':
+          description: Успешный ответ с массивом персоналий
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Personality'
+    post:
+      summary: Добавить новую личность
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Personality'
+      responses:
+        '201':
+          description: Личность успешно добавлена
+
+  /personalities/{id}:
+    get:
+      summary: Получить информацию о личности по id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Успешный ответ с информацией о персоналии
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Personality'
+        '404':
+          description: Личность не найдена
+
+    put:
+      summary: Обновить информацию о персоналии по id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Personality'
+      responses:
+        '200':
+          description: Информация о личности успешно обновлена
+        '201':
+          description: Личность успешно создана
+
+    delete:
+      summary: Удалить личность по id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Персоналия успешно удалена
+        '404':
+          description: Персоналия не найдена
+      
+    patch:
+      summary: Обновить информацию о персоналии по id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Personality'
+      responses:
+        '200':
+          description: Информация о личности успешно обновлена
+        '404':
+          description: Личность не найдена
+
+  /playlists:
+    get:
+      summary: Получить список всех плейлистов
+      responses:
+        '200':
+          description: Успешный ответ с массивом плейлистов
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Playlist'
+    post:
+      summary: Добавить новый плейлист
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Playlist'
+      responses:
+        '201':
+          description: Видео успешно добавлено
+
+  /playlists/{id}:
+    get:
+      summary: Получить информацию о плейлисте по id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Успешный ответ с информацией о плейлисте
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Playlist'
+        '404':
+          description: Плейлист не найден
+    put:
+      summary: Обновление информации о плейлисте по id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Информация о плейлисте успешно обновлена
+        '201':
+          description: Плейлист успешно создан
+          
+    patch:
+      summary: Обновление информации о плейлисте по id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Информация о плейлисте успешно обновлена
+        '404':
+          description: Плейлист не найден
+          
+    delete:
+      summary: Удаление плейлиста по id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Информация о плейлисте успешно удалена
+        '404':
+          description: Плейлист не найден
+          
+
+  /users:
+    get:
+      summary: Получить список всех пользователей
+      responses:
+        '200':
+          description: Успешный ответ с массивом пользователей
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+    post:
+      summary: Добавить нового пользователя
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: Видео успешно добавлено
+  
+  /users/{id}:
+    get:
+      summary: Получение пользователя по id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Успешный ответ с информацией о пользователе
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          description: Пользователь не найден
+    put:
+      summary: Обновление информации о пользователе по id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Информация о пользователе успешно обновлена
+        '201':
+          description: Запись о пользователе создана
+    patch:
+      summary: Обновление информации о пользователе по id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Информация о пользователе успешно обновлена
+        '404':
+          description: Пользователь не найден
+    delete:
+      summary: Удаление пользователя по id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Информация о пользователе успешно удалена
+        '404':
+          description: Пользователь не найден
+
+  /interactions:
+    get:
+      summary: Получить список всех взаимодействий
+      responses:
+        '200':
+          description: Успешный ответ со списком взаимодействий
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Interaction'
+    post:
+      summary: Создать взаимодействие (лайк или комментарий)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Interaction'
+      responses:
+        '201':
+          description: Взаимодействие успешно создано
+  
+  /interactions/{id}:
+    get:
+      summary: Получение взаимодействия по id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Успешный ответ с информацией о взаимодействии
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Interaction'
+        '404':
+          description: Взаимодействие не найдено
+    put:
+      summary: Обновление информации о взаимодействии по id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Информация о взаимодействии успешно обновлена
+        '201':
+          description: Запись о взаимодействии создана
+    patch:
+      summary: Обновление информации о взаимодействии по id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Информация о взаимодействии успешно обновлена
+        '404':
+          description: Пользователь не найден
+    delete:
+      summary: Удаление пользователя по id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Информация о пользователе успешно удалена
+        '404':
+          description: Взаимодействие не найдено
+
+components:
+  schemas:
+    Genre:
+      type: object
+      properties:
+        genre_id:
+          type: integer
+          example: 1
+        genre_name:
+          type: string
+          example: "Комедия"
+          
+    Personality:
+      type: object
+      properties:
+          personality_id:
+            type: integer
+            example: 1
+          personality_fullname:
+            type: string
+            example: "Steven Spielberg"
+          personality_alias:
+            type: string
+            example: "Spielberg"
+          personality_roles:
+            $ref: '#/components/schemas/PersonalityRoles'
+          personality_birth:
+            type: string
+            format: date
+            example: "1990-09-09"
+          personality_movies:
+            $ref: '#/components/schemas/Video'
+    
+    PersonalityRoles:
+      type: object
+      properties:
+        role_id: 
+          type: integer
+          example: 131
+        role_name:
+          type: string
+          example: "Director"
+
+    Video:
+      type: object
+      properties:
+        video_id:
+          type: integer
+          example: 101
+        video_title:
+          type: string
+          example: "Raiders of the Lost Ark"
+        video_desc:
+          type: string
+          example: "Movie about Indiana Jones"
+        video_duration:
+          type: string
+          format: time
+          example: "01:40:00"
+        video_release:
+          type: string
+          format: date
+          example: "2003-05-30"
+        video_cast:
+          $ref: '#/components/schemas/VideoCast'
+        video_rating:
+          type: number
+          example: 4.5
+        video_genre:
+          $ref: '#/components/schemas/Genre'
+    
+    VideoCast:
+      type: object
+      properties:
+        videocast_id:
+          type: integer
+          example: 1
+        video_id:
+          type: integer
+          example: 101
+        personality_id:
+          type: integer
+          example: 1
+        personality_role:
+          $ref: '#/components/schemas/PersonalityRoles'
+
+    Playlist:
+      type: object
+      properties:
+        playlist_id:
+          type: integer
+          example: 1
+        playlist_name:
+          type: string
+          example: "Лучшие комедии"
+        playlist_genre:
+          $ref: '#/components/schemas/Genre'
+        playlist_type:
+          type: string
+          enum: ['series', 'collection']
+          example: "collection"
+        videos:
+          $ref: '#/components/schemas/Video'
+
+    User:
+      type: object
+      properties:
+        user_id:
+          type: integer
+          example: 1001
+        user_name:
+          type: string
+          example: "user123"
+        user_email:
+          type: string
+          example: "user@example.com"
+        user_password:
+          type: string
+          example: "hashed_password"
+        user_subscription:
+          type: string
+          example: "premium"
+        user_watch_hours:
+          type: string
+          example: "25"
+
+    Interaction:
+      type: object
+      properties:
+        interaction_id:
+          type: integer
+          example: 1
+        user_id:
+          type: integer
+          example: 1001
+        video_id:
+          type: integer
+          example: 101
+        like:
+          type: integer
+          example: 1
+        comments:
+          type: string
+          example: "Отличный фильм!"
