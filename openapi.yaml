@@ -578,8 +578,6 @@ components:
             type: string
             format: date
             example: "1990-09-09"
-          personality_movies:
-            $ref: '#/components/schemas/Video'
     
     PersonalityRoles:
       type: object
@@ -631,8 +629,6 @@ components:
         personality_id:
           type: integer
           example: 1
-        personality_role:
-          $ref: '#/components/schemas/PersonalityRoles'
 
     Playlist:
       type: object
